@@ -14,6 +14,12 @@ func main() {
 	big := bigMap(1000, 8)
 	test(big)
 	testPtr(&big)
+
+	fmt.Println(sum(10, 20, 30))
+
+	someSlice := []string{"one", "two", "three"}
+	someSlice = appendString(someSlice, "four")
+	fmt.Println(someSlice)
 }
 
 func invert(slice []int) []int {
@@ -66,4 +72,24 @@ func testPtr(t *map[string]string) {
 	start := time.Now()
 	elapsed := time.Since(start)
 	fmt.Println("Test pointer elapsed:", elapsed)
+}
+
+func sum(params ...int) int {
+	var sum int
+	for _, p := range params {
+		sum += p
+	}
+	return sum
+}
+
+func appendString(s []string, val string) []string {
+	if cap(s) >= len(s)+1 {
+		s = append(s, val)
+		return s
+	} else {
+		new := make([]string, len(s)+1, cap(s)*2)
+		copy(new, s)
+		new = append(new, val)
+		return new
+	}
 }
